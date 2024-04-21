@@ -1,20 +1,19 @@
 package com.abhi41.demoproject.recylerview;
 
 public class Item {
-    int itemImg;
-    String itemName,itemDesc;
+    String itemName,itemDesc,itemImg;
 
-    public Item(int itemImg, String itemName, String itemDesc) {
+    public Item(String itemImg, String itemName, String itemDesc) {
         this.itemImg = itemImg;
         this.itemName = itemName;
         this.itemDesc = itemDesc;
     }
 
-    public int getItemImg() {
+    public String getItemImg() {
         return itemImg;
     }
 
-    public void setItemImg(int itemImg) {
+    public void setItemImg(String itemImg) {
         this.itemImg = itemImg;
     }
 

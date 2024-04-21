@@ -1,5 +1,6 @@
 package com.abhi41.demoproject.recylerview;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abhi41.demoproject.R;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Item> itemList;
-
-    public MyAdapter(List<Item> itemList) {
+    private ItemClickListener listener;
+    private Context context;
+    public MyAdapter(List<Item> itemList, Context ctx) {
         this.itemList = itemList;
+        this.context = ctx;
     }
 
     @NonNull
@@ -32,8 +36,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Item item = itemList.get(position);
             holder.title.setText(item.getItemName());
-            holder.iv_item.setImageResource(item.getItemImg());
             holder.description.setText(item.getItemDesc());
+
+        Glide.with(context)
+                .load(item.getItemImg())
+                .into(holder.iv_item);
+
     }
 
     @Override
@@ -43,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder  {
         private ImageView iv_item;
         private TextView title,description;
         public ViewHolder(@NonNull View itemView) {
@@ -52,6 +60,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(v,getAdapterPosition());
+                }
+            });
         }
+
+
+
     }
+    public void setClickListener(ItemClickListener l){
+        this.listener = l;
+    }
+
 }
